@@ -1,0 +1,26 @@
+server:
+  port: 8080
+swagger-ui:
+  url: "http://localhost:8080/swagger-ui/index.html"
+springdoc:
+  api-docs:
+    path: /api-docs
+spring:
+  liquibase:
+    default-schema: public
+    url: jdbc:postgresql://localhost:5432/postgres
+    user: postgres
+    password: postgres
+    change-log: classpath:db/migration/sqlSchema.sql
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    jpa:
+      hibernate:
+        #        ddl-auto: update
+        show-sql: true
+hibernate:
+  hbm2ddl:
+    auto: update
