@@ -38,14 +38,14 @@ public class UserController {
     }
 
     @Operation(summary = "Чтение пользователя по id (с аутентификацией, только для ADMIN)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/read/{id}")
     public UserDtoResponse readUser(@PathVariable(name = "id") UUID id) throws UserNotFoundException {
         return userDetailsManager.readUser(id);
     }
 
     @Operation(summary = "Обновление пользователя (с аутентификацией, только для ADMIN)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/update")
     public void updateUser(@RequestBody UserDtoForUpdating userDto) throws UserNotFoundException {
         UserDetailsAdditional userDetails = userMapper.userDtoForUpdatingToUserDetailsAdditional(userDto);
@@ -53,14 +53,14 @@ public class UserController {
     }
 
     @Operation(summary = "Удаление пользователя по id (с аутентификацией, только для ADMIN)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/delete/{id}")
     public void deleteUser(@PathVariable(name = "id") UUID id) throws UserNotFoundException {
         userDetailsManager.deleteUser(id);
     }
 
     @Operation(summary = "Чтение всех пользователей (с аутентификацией, только для ADMIN)")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    //@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/readAll")
     public List<UserDtoResponse> readAllUsers() {
         return userDetailsManager.findAll();

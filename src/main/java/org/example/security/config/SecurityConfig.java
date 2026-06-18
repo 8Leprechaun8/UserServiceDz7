@@ -56,7 +56,7 @@ public class SecurityConfig {
                         "/api/users/read/**",
                         "/api/users/update",
                         "/api/users/delete/**",
-                        "/api/users/readAll").authenticated()
+                        "/api/users/readAll").permitAll()
                 .anyRequest().denyAll()
         );
 
