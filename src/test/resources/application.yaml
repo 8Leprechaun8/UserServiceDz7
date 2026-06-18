@@ -6,6 +6,9 @@ springdoc:
   api-docs:
     path: /api-docs
 spring:
+  cloud:
+    config:
+      enabled: false
   liquibase:
     default-schema: public
     url: jdbc:postgresql://localhost:5432/postgres

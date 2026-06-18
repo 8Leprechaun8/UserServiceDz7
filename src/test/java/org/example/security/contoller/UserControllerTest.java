@@ -103,7 +103,7 @@ public class UserControllerTest {
         UserDtoResponse userDtoResponse = createUserDtoResponse(id);
         when(userDetailsManager.readUser(id)).thenReturn(userDtoResponse);
 
-        mvc.perform(post("/api/users/read/" + id)
+        mvc.perform(get("/api/users/read/" + id)
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{" +
@@ -126,7 +126,7 @@ public class UserControllerTest {
         UserDtoResponse userDtoResponse = createUserDtoResponse(id);
         when(userDetailsManager.readUser(id)).thenThrow(new UserNotFoundException("Пользователь не найден"));
 
-        mvc.perform(post("/api/users/read/" + id)
+        mvc.perform(get("/api/users/read/" + id)
                         .with(csrf()))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("{\"message\":\"Пользователь не найден\"}"));
@@ -144,7 +144,7 @@ public class UserControllerTest {
         when(userMapper.userDtoForUpdatingToUserDetailsAdditional(any(UserDtoForUpdating.class))).thenReturn(userDetails);
         doNothing().when(userDetailsManager).updateUser(any(UserDetailsAdditional.class));
 
-        mvc.perform(post("/api/users/update")
+        mvc.perform(put("/api/users/update")
                         .with(csrf())
                         .content("{\n" +
                                 "  \"\": \"" + userDtoForUpdating.getId() +"\",\n" +
@@ -171,7 +171,7 @@ public class UserControllerTest {
         doThrow(new UserNotFoundException("В бд не найден пользователь"))
                 .when(userDetailsManager).updateUser(any(UserDetailsAdditional.class));
 
-        mvc.perform(post("/api/users/update")
+        mvc.perform(put("/api/users/update")
                         .with(csrf())
                         .content("{\n" +
                                 "  \"\": \"" + userDtoForUpdating.getId() +"\",\n" +
@@ -195,7 +195,7 @@ public class UserControllerTest {
         UUID id = UUID.randomUUID();
         doNothing().when(userDetailsManager).deleteUser(id);
 
-        mvc.perform(post("/api/users/delete/" + id)
+        mvc.perform(delete("/api/users/delete/" + id)
                         .with(csrf()))
                 .andExpect(status().isOk());
 
@@ -210,7 +210,7 @@ public class UserControllerTest {
         UUID id = UUID.randomUUID();
         doThrow(new UserNotFoundException("В бд не найден пользователь")).when(userDetailsManager).deleteUser(id);
 
-        mvc.perform(post("/api/users/delete/" + id)
+        mvc.perform(delete("/api/users/delete/" + id)
                         .with(csrf()))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().json("{\"message\":\"В бд не найден пользователь\"}"));;
@@ -227,7 +227,7 @@ public class UserControllerTest {
         UserDtoResponse userDtoResponse = createUserDtoResponse(id);
         when(userDetailsManager.findAll()).thenReturn(List.of(userDtoResponse));
 
-        mvc.perform(post("/api/users/readAll")
+        mvc.perform(get("/api/users/readAll")
                         .with(csrf()))
                 .andExpect(status().isOk())
                 .andExpect(content().json("[{" +
